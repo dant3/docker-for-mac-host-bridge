@@ -111,7 +111,7 @@ bridge_docker_network() {
       {{end}}
     ' $network
   ) eth$ethintf \
-  > $libdir/Data/com.docker.driver.amd64-linux/tty
+  > $libdir/Data/vms/0/tty
 }
 
 assign_ip_to_tap_intf() {
