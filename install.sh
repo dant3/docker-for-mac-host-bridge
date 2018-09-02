@@ -13,7 +13,7 @@ main() {
   # name of the docker network's bridge intf inside moby; default: br-$tapintf
   netintf=${DOCKER_TAP_MOBY_BRIDGE-br-$tapintf}
 
-  install_tuntap_driver $1
+  install_tuntap_driver
   chown_tap_device
   install_hyperkit_shim
   create_docker_network
@@ -28,13 +28,7 @@ log() { echo "$(tput setaf 10)$@$(tput sgr0)"; }
 install_tuntap_driver() {
   test -c /dev/$tapintf && return # already done
 
-  test $# -lt 1 && err "
-    Expecting tuntap .pkg file as first arg
-    Get it here: http://tuntaposx.sourceforge.net/
-  "
-
-  log Install tuntap kernel extension
-  sudo installer -package $1 -target /
+  brew cask install tuntap
 
   log Ensure tap extension is loaded
   sudo kextload /Library/Extensions/tap.kext
